@@ -2,7 +2,6 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import Notifications from '~/components/Notifications';
 import logo from '~/assets/logo.svg';
 
 import { Container, Content, Profile } from './styles';
@@ -13,11 +12,9 @@ export default function Header() {
   return (
     <Container>
       <Content>
-        <div>
+        <nav>
           <img src={logo} sizes="48" alt="Gympoint" />
           <h1>GYMPOINT</h1>
-        </div>
-        <nav>
           <div>
             <Link to="/dashboard">ALUNOS</Link>
             <Link to="/dashboard">PLANOS</Link>

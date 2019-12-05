@@ -12,14 +12,13 @@ export const Content = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  align-self: auto;
 
-  div {
-    border-right: 1px solid #eee;
-    height: 100%;
+  nav {
+    display: flex;
     align-items: center;
 
     img {
-      margin-right: 13px;
       width: 48px;
     }
 
@@ -27,11 +26,9 @@ export const Content = styled.div`
       margin-right: 13px;
       font-size: 15px;
       color: #ee4d64;
+      border-right: 1px solid #eee;
+      padding: 10px;
     }
-  }
-  nav {
-    display: flex;
-    align-items: center;
 
     a {
       font-weight: bold;
