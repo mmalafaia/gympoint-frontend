@@ -1,6 +1,5 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { Form, Input } from '@rocketseat/unform';
 import * as Yup from 'yup';
 
@@ -9,10 +8,8 @@ import { signInRequest } from '~/store/modules/auth/actions';
 import logo from '~/assets/logo.svg';
 
 const schema = Yup.object().shape({
-  email: Yup.string()
-    .email('Insira um email válido')
-    .required('O email é obrigatório'),
-  password: Yup.string().required('A senha é obrigatória'),
+  email: Yup.string().email(),
+  password: Yup.string(),
 });
 
 export default function SignIn() {

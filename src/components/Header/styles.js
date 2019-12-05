@@ -13,19 +13,31 @@ export const Content = styled.div`
   justify-content: space-between;
   align-items: center;
 
+  div {
+    border-right: 1px solid #eee;
+    height: 100%;
+    align-items: center;
+
+    img {
+      margin-right: 13px;
+      width: 48px;
+    }
+
+    h1 {
+      margin-right: 13px;
+      font-size: 15px;
+      color: #ee4d64;
+    }
+  }
   nav {
     display: flex;
     align-items: center;
 
-    img {
-      margin-right: 20px;
-      padding-right: 20px;
-      border-right: 1px solid #eee;
-    }
-
     a {
       font-weight: bold;
-      color: #7159c1;
+      font-size: 15px;
+      color: #000;
+      margin: 10px;
     }
   }
   aside {

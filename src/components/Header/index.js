@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import Notifications from '~/components/Notifications';
-import logo from '~/assets/logo-purple.svg';
+import logo from '~/assets/logo.svg';
 
 import { Container, Content, Profile } from './styles';
 
@@ -13,26 +13,25 @@ export default function Header() {
   return (
     <Container>
       <Content>
+        <div>
+          <img src={logo} sizes="48" alt="Gympoint" />
+          <h1>GYMPOINT</h1>
+        </div>
         <nav>
-          <img src={logo} alt="GoBarber" />
-          <Link to="/dashboard">DASHBOARD</Link>
+          <div>
+            <Link to="/dashboard">ALUNOS</Link>
+            <Link to="/dashboard">PLANOS</Link>
+            <Link to="/dashboard">MATRÍCULAS</Link>
+            <Link to="/dashboard">PEDIDOS DE AUXÍLIO</Link>
+          </div>
         </nav>
 
         <aside>
-          <Notifications />
-
           <Profile>
             <div>
               <strong>{profile.name}</strong>
-              <Link to="/profile">Meu perfil</Link>
+              <Link to="/profile">sair do sistema</Link>
             </div>
-            <img
-              src={
-                profile.avatar.url ||
-                'https://api.adorable.io/avatars/50/abott@adorable.png'
-              }
-              alt={profile.name}
-            />
           </Profile>
         </aside>
       </Content>
