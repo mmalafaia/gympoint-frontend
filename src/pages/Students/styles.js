@@ -4,7 +4,6 @@ export const Container = styled.div`
   max-width: 1200px;
   max-height: 542px;
   margin: 50px auto;
-  background: #fff;
   display: flex;
   flex-direction: column;
 
@@ -25,11 +24,22 @@ export const Container = styled.div`
     }
   }
 
-  ul {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-gap: 15px;
-    margin-top: 30px;
+  div {
+    width: 100%;
+    background: #fff;
+
+    table {
+      padding: 30px;
+      width: 100%;
+      margin-top: 30px;
+      text-align: left;
+
+      td {
+        height: 52px;
+        font-size: 16px;
+        border-bottom: 1px solid #eee;
+      }
+    }
   }
 `;
 
