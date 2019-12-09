@@ -23,17 +23,6 @@ export const Container = styled.div`
       padding: 10px;
       justify-content: right;
 
-      button {
-        width: 142px;
-        height: 36px;
-        background: #ee4d64;
-        font-size: 14px;
-        font-weight: bold;
-        color: #fff;
-        border: 0;
-        border-radius: 4px;
-      }
-
       input {
         width: 237px;
         padding-left: 40px;
@@ -65,6 +54,38 @@ export const Container = styled.div`
       }
     }
   }
+
+  form {
+    width: 100%;
+    background: #fff;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+
+    span {
+      font-size: 14;
+      font-weight: bold;
+      padding: 5px 0px;
+    }
+
+    input {
+      font-size: 16;
+      padding: 10px;
+      margin: 5px 0px;
+      border-style: none;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+
+    ul {
+      background: red;
+      flex-direction: row;
+
+      li {
+        background: #eee;
+      }
+    }
+  }
 `;
 
 export const ButtonEdit = styled.button`
@@ -78,4 +99,18 @@ export const ButtonDelete = styled.button`
   background: none;
   border: none;
   color: #de3b3b;
+`;
+
+export const ButtonBig = styled.button`
+  width: 142px;
+  height: 36px;
+  background: ${props => (props.color ? props.color : '#ee4d64')};
+  font-size: 14px;
+  font-weight: bold;
+  color: #fff;
+  border: 0;
+  border-radius: 4px;
+  text-align: right;
+  padding-right: 16px;
+  margin-left: 15px;
 `;
