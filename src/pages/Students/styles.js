@@ -8,23 +8,43 @@ export const Container = styled.div`
   flex-direction: column;
 
   header {
+    width: 100%;
     display: flex;
-    align-self: center;
     align-items: center;
+    justify-content: space-between;
 
-    button {
-      border: 0;
-      background: none;
+    h1 {
+      align-self: center;
     }
 
-    strong {
-      color: #fff;
-      font-size: 24px;
-      margin: 0 15px;
+    div {
+      display: flex;
+      height: 56px;
+      padding: 10px;
+      justify-content: right;
+
+      button {
+        width: 142px;
+        height: 36px;
+        background: #ee4d64;
+        font-size: 14px;
+        font-weight: bold;
+        color: #fff;
+        border: 0;
+        border-radius: 4px;
+      }
+
+      input {
+        width: 237px;
+        padding-left: 40px;
+        margin-left: 10px;
+        border-radius: 4px;
+        border: 1px solid #eee;
+      }
     }
   }
 
-  div {
+  > div {
     width: 100%;
     background: #fff;
 
@@ -39,27 +59,23 @@ export const Container = styled.div`
         font-size: 16px;
         border-bottom: 1px solid #eee;
       }
+
+      > td {
+        width: 50%;
+      }
     }
   }
 `;
 
-export const Time = styled.li`
-  padding: 20px;
-  border-radius: 4px;
-  background: #fff;
+export const ButtonEdit = styled.button`
+  background: none;
+  border: none;
+  color: #4d85ee;
+  padding: 10px;
+`;
 
-  opacity: ${props => (props.past ? 0.6 : 1)};
-
-  strong {
-    display: block;
-    color: ${props => (props.available ? '#999' : '#7159c1')};
-    font-size: 20px;
-    font-weight: normal;
-  }
-
-  span {
-    display: block;
-    margin-top: 3px;
-    color: ${props => (props.available ? '#999' : '#666')};
-  }
+export const ButtonDelete = styled.button`
+  background: none;
+  border: none;
+  color: #de3b3b;
 `;
