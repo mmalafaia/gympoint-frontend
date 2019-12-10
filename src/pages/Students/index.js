@@ -24,13 +24,16 @@ export default function Students() {
   const [studentList, setStudentList] = useState([]);
   const [findName, setFindName] = useState('');
   const [studentForm, setStudentForm] = useState({
+    id: 0,
     name: '',
     email: '',
     age: 0,
     weight: 0,
     height: 0,
+    formatedWeight: 0,
+    formatedHeight: 0,
   });
-  const [pageStatus, setPageStatus] = useState('list'); // list, form
+  const [pageStatus, setPageStatus] = useState('form'); // list, form
 
   useEffect(() => {
     async function loadStudents() {
@@ -38,11 +41,16 @@ export default function Students() {
         params: { name: findName },
       });
 
-      setStudentList(response.data);
+      const data = response.data.map(student => ({
+        ...student,
+        formatedWeight: `${student.weight}kg`,
+        formatedHeight: `${student.height}m`,
+      }));
+      setStudentList(data);
     }
 
     loadStudents();
-  }, [findName, studentList]);
+  }, [findName]);
 
   function handleSubmitFilter(e) {
     setFindName(e.target.value);
@@ -56,7 +64,7 @@ export default function Students() {
     try {
       const response =
         studentForm.id > 0
-          ? await api.put('/students', payload)
+          ? await api.put(`/students/${studentForm.id}`, payload)
           : await api.post('/students', payload);
 
       if (studentForm.id > 0) {
@@ -74,7 +82,7 @@ export default function Students() {
       toast.success('Usuário criado com sucesso!');
       setPageStatus('list');
     } catch (error) {
-      toast.error(error);
+      toast.error(error.message);
     }
   }
 
@@ -89,7 +97,8 @@ export default function Students() {
   }
 
   async function handleDelete(payload) {
-    if (window.confirm('Vocẽ tem certeza que deseja deletar?')) {
+    // eslint-disable-next-line no-alert
+    if (window.confirm(`Confirm exclusão de '${payload.name}' ?`)) {
       try {
         const response = await api.delete(`/students/${payload.id}`);
 
@@ -161,7 +170,11 @@ export default function Students() {
     return (
       <Container>
         <header>
-          <h1>Edição de aluno</h1>
+          {studentForm.id > 0 ? (
+            <h1>Edição de aluno</h1>
+          ) : (
+            <h1>Cadastro de alunos</h1>
+          )}
           <div>
             <ButtonBig color="#CCC" onClick={handleBack}>
               VOLTAR
@@ -178,13 +191,13 @@ export default function Students() {
           initialData={studentForm}
         >
           <span>NOME COMPLETO</span>
-          <Input name="name" placeholder="informe seu nome completo" />
+          <Input name="name" placeholder="John Dow" />
           <span>ENDEREÇO DE E-MAIL</span>
           <Input name="email" type="email" placeholder="exemplo@email.com" />
           <ul>
             <li>
               <span>IDADE</span>
-              <Input name="age" type="number" placeholder="Informe sua idade" />
+              <Input name="age" type="number" />
             </li>
             <li>
               <span>PESO (em kg)</span>
@@ -195,7 +208,7 @@ export default function Students() {
                 step="0.1"
                 min="20.0"
                 max="300.00"
-                placeholder="Informe seu peso"
+                placeholder=""
               />
             </li>
             <li>
@@ -207,7 +220,7 @@ export default function Students() {
                 step="0.01"
                 min="0.80"
                 max="2.50"
-                placeholder="Informe sua altura"
+                placeholder=""
               />
             </li>
           </ul>

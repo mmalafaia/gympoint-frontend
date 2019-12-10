@@ -78,12 +78,14 @@ export const Container = styled.div`
     }
 
     ul {
-      background: red;
-      flex-direction: row;
-
-      li {
-        background: #eee;
-      }
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+    }
+    li {
+      display: grid;
+    }
+    li + li {
+      padding-left: 17px;
     }
   }
 `;
