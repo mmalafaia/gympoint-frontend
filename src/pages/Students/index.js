@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Input } from '@rocketseat/unform';
+import { toast } from 'react-toastify';
 import * as Yup from 'yup';
 
 import api from '~/services/api';
@@ -22,7 +23,14 @@ const schema = Yup.object().shape({
 export default function Students() {
   const [studentList, setStudentList] = useState([]);
   const [findName, setFindName] = useState('');
-  const [pageStatus, setPageStatus] = useState('add'); // show, add, edit
+  const [studentForm, setStudentForm] = useState({
+    name: '',
+    email: '',
+    age: 0,
+    weight: 0,
+    height: 0,
+  });
+  const [pageStatus, setPageStatus] = useState('list'); // list, form
 
   useEffect(() => {
     async function loadStudents() {
@@ -34,43 +42,73 @@ export default function Students() {
     }
 
     loadStudents();
-  }, [findName]);
+  }, [findName, studentList]);
 
   function handleSubmitFilter(e) {
     setFindName(e.target.value);
   }
 
   function handleAdd() {
-    setPageStatus('add');
+    setPageStatus('form');
   }
 
-  async function handleSubmitSave(data) {
-    console.tron.warn(data);
-
-    const { name, email, age, weight, height } = data;
-
+  async function handleSubmitSave(payload) {
     try {
-      const response = await api.post('/students', {
-        body: { name, email, age, weight, height },
-      });
+      const response =
+        studentForm.id > 0
+          ? await api.put('/students', payload)
+          : await api.post('/students', payload);
 
-      setPageStatus('show');
+      if (studentForm.id > 0) {
+        const index = studentList.findIndex(
+          stud => stud.email === payload.email
+        );
+        const newStudent = studentList;
+        newStudent[index] = response.data;
+
+        setStudentList(newStudent);
+      } else {
+        setStudentList(studentList.concat(response.data));
+      }
+      setStudentForm({});
+      toast.success('Usuário criado com sucesso!');
+      setPageStatus('list');
     } catch (error) {
-      console.tron.warn(error);
+      toast.error(error);
     }
   }
 
   function handleBack() {
-    setPageStatus('show');
+    setStudentForm({});
+    setPageStatus('list');
   }
 
-  function handleEdit() {
-    setPageStatus('edit');
+  function handleEdit(payload) {
+    setStudentForm(payload);
+    setPageStatus('form');
   }
 
-  function handleDelete() {
-    window.confirm('Vocẽ tem certeza que deseja deletar?');
-    setPageStatus('edit');
+  async function handleDelete(payload) {
+    if (window.confirm('Vocẽ tem certeza que deseja deletar?')) {
+      try {
+        const response = await api.delete(`/students/${payload.id}`);
+
+        if (response.data.ok) {
+          const draftStudenList = studentList;
+          const index = studentList.findIndex(
+            stud => stud.email === payload.email
+          );
+          draftStudenList.splice(index, 1);
+          setStudentList(draftStudenList);
+          toast.success('Usuário excluído com sucesso!');
+        } else {
+          toast.error('Erro ao excluir usuário');
+        }
+      } catch (error) {
+        toast.error(error.message);
+      }
+      setPageStatus('list');
+    }
   }
 
   function tableRow(row) {
@@ -80,10 +118,10 @@ export default function Students() {
         <td>{row.email}</td>
         <td>{row.age}</td>
         <td>
-          <ButtonEdit type="button" onClick={handleEdit}>
+          <ButtonEdit type="button" onClick={() => handleEdit(row)}>
             editar
           </ButtonEdit>
-          <ButtonDelete type="button" onClick={handleDelete}>
+          <ButtonDelete type="button" onClick={() => handleDelete(row)}>
             apagar
           </ButtonDelete>
         </td>
@@ -91,7 +129,7 @@ export default function Students() {
     );
   }
 
-  if (pageStatus === 'show') {
+  if (pageStatus === 'list') {
     return (
       <Container>
         <header>
@@ -119,7 +157,7 @@ export default function Students() {
       </Container>
     );
   }
-  if (pageStatus === 'add') {
+  if (pageStatus === 'form') {
     return (
       <Container>
         <header>
@@ -133,7 +171,12 @@ export default function Students() {
             </ButtonBig>
           </div>
         </header>
-        <Form schema={schema} onSubmit={handleSubmitSave} id="formSubmit">
+        <Form
+          schema={schema}
+          onSubmit={handleSubmitSave}
+          id="formSubmit"
+          initialData={studentForm}
+        >
           <span>NOME COMPLETO</span>
           <Input name="name" placeholder="informe seu nome completo" />
           <span>ENDEREÇO DE E-MAIL</span>
