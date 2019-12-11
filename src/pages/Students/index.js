@@ -16,8 +16,8 @@ const schema = Yup.object().shape({
   age: Yup.number()
     .integer()
     .required('A idade é obrigatória'),
-  weight: Yup.number().required('O peso é obrigatório'),
-  height: Yup.number().required('A altura é obrigatória'),
+  formatedWeight: Yup.number().required('O peso é obrigatório'),
+  formatedHeight: Yup.number().required('A altura é obrigatória'),
 });
 
 export default function Students() {
@@ -30,10 +30,8 @@ export default function Students() {
     age: 0,
     weight: 0,
     height: 0,
-    formatedWeight: 0,
-    formatedHeight: 0,
   });
-  const [pageStatus, setPageStatus] = useState('form'); // list, form
+  const [pageStatus, setPageStatus] = useState('list'); // list, form
 
   useEffect(() => {
     async function loadStudents() {
@@ -53,7 +51,7 @@ export default function Students() {
   }, [findName]);
 
   function handleSubmitFilter(e) {
-    setFindName(e.target.value);
+    if (e.key === 'Enter') setFindName(e.target.value);
   }
 
   function handleAdd() {
@@ -78,8 +76,12 @@ export default function Students() {
       } else {
         setStudentList(studentList.concat(response.data));
       }
-      setStudentForm({});
-      toast.success('Usuário criado com sucesso!');
+      if (studentForm.id > 0) {
+        setStudentForm({});
+        toast.success('Usuário alterado com sucesso!');
+      } else {
+        toast.success('Usuário criado com sucesso!');
+      }
       setPageStatus('list');
     } catch (error) {
       toast.error(error.message);
@@ -191,7 +193,7 @@ export default function Students() {
           initialData={studentForm}
         >
           <span>NOME COMPLETO</span>
-          <Input name="name" placeholder="John Dow" />
+          <Input name="name" placeholder="John Doe" />
           <span>ENDEREÇO DE E-MAIL</span>
           <Input name="email" type="email" placeholder="exemplo@email.com" />
           <ul>
@@ -201,27 +203,11 @@ export default function Students() {
             </li>
             <li>
               <span>PESO (em kg)</span>
-              <Input
-                name="weight"
-                type="number"
-                placehouder="60.0"
-                step="0.1"
-                min="20.0"
-                max="300.00"
-                placeholder=""
-              />
+              <Input name="weight" />
             </li>
             <li>
               <span>ALTURA</span>
-              <Input
-                name="height"
-                type="number"
-                placehouder="1.70"
-                step="0.01"
-                min="0.80"
-                max="2.50"
-                placeholder=""
-              />
+              <Input name="height" />
             </li>
           </ul>
         </Form>
