@@ -1,54 +1,126 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  max-width: 600px;
+  max-width: 1200px;
+  max-height: 542px;
   margin: 50px auto;
-
   display: flex;
   flex-direction: column;
 
   header {
+    width: 100%;
     display: flex;
-    align-self: center;
     align-items: center;
+    justify-content: space-between;
 
-    button {
-      border: 0;
-      background: none;
+    h1 {
+      align-self: center;
     }
 
-    strong {
-      color: #fff;
-      font-size: 24px;
-      margin: 0 15px;
+    div {
+      display: flex;
+      height: 56px;
+      padding: 10px;
+      justify-content: right;
+
+      input {
+        width: 237px;
+        padding-left: 40px;
+        margin-left: 10px;
+        border-radius: 4px;
+        border: 1px solid #eee;
+      }
     }
   }
 
-  ul {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-gap: 15px;
-    margin-top: 30px;
+  > div {
+    width: 100%;
+    background: #fff;
+
+    table {
+      padding: 30px;
+      width: 100%;
+      margin-top: 30px;
+      text-align: left;
+
+      th + th {
+        text-align: center;
+      }
+
+      td {
+        height: 52px;
+        font-size: 16px;
+        border-bottom: 1px solid #eee;
+      }
+
+      td + td {
+        text-align: center;
+      }
+
+      > td {
+        width: 50%;
+      }
+    }
+  }
+
+  form {
+    width: 100%;
+    background: #fff;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+
+    span {
+      font-size: 14;
+      font-weight: bold;
+      padding: 5px 0px;
+    }
+
+    input {
+      font-size: 16;
+      padding: 10px;
+      margin: 5px 0px;
+      border-style: none;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+
+    ul {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+    }
+    li {
+      display: grid;
+    }
+    li + li {
+      padding-left: 17px;
+    }
   }
 `;
 
-export const Time = styled.li`
-  padding: 20px;
+export const ButtonEdit = styled.button`
+  background: none;
+  border: none;
+  color: #4d85ee;
+  padding: 10px;
+`;
+
+export const ButtonDelete = styled.button`
+  background: none;
+  border: none;
+  color: #de3b3b;
+`;
+
+export const ButtonBig = styled.button`
+  width: 142px;
+  height: 36px;
+  background: ${props => (props.color ? props.color : '#ee4d64')};
+  font-size: 14px;
+  font-weight: bold;
+  color: #fff;
+  border: 0;
   border-radius: 4px;
-  background: #fff;
-
-  opacity: ${props => (props.past ? 0.6 : 1)};
-
-  strong {
-    display: block;
-    color: ${props => (props.available ? '#999' : '#7159c1')};
-    font-size: 20px;
-    font-weight: normal;
-  }
-
-  span {
-    display: block;
-    margin-top: 3px;
-    color: ${props => (props.available ? '#999' : '#666')};
-  }
+  text-align: right;
+  padding-right: 16px;
+  margin-left: 15px;
 `;

@@ -144,7 +144,7 @@ export default function Students() {
       </Container>
     );
   }
-  if (pageStatus === 'form') {
+  if (pageStatus === 'add' || pageStatus === 'edit') {
     return (
       <Container>
         <header>
