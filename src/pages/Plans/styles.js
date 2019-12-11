@@ -43,10 +43,18 @@ export const Container = styled.div`
       margin-top: 30px;
       text-align: left;
 
+      th + th {
+        text-align: center;
+      }
+
       td {
         height: 52px;
         font-size: 16px;
         border-bottom: 1px solid #eee;
+      }
+
+      td + td {
+        text-align: center;
       }
 
       > td {
