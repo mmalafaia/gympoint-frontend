@@ -47,9 +47,7 @@ export const Answer = styled.textarea`
   text-align: justify;
   text-justify: inter-word;
   padding: 10px;
-  ::-webkit-input-placeholder {
-    font-family: Roboto, sans-serif;
-  }
+  font-family: Roboto, sans-serif;
 `;
 
 export const ButtonAdd = styled.button`

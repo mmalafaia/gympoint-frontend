@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Container,
   Card,
@@ -9,21 +9,22 @@ import {
   ButtonCancel,
 } from './styles';
 
-export default function Modal({ handleClose, handleAdd }) {
+export default function Modal({ handleAdd, handleClose, helpOrder }) {
+  const [answer, setAnswer] = useState('');
   return (
     <Container>
       <Card>
         <Title>PERGUNTA DO ALUNO</Title>
-        <Question>
-          Olá pessoal da cademia, gostaria de saber se quando acordar deve
-          ingferir batata sode e frando log de primeira, preparar asmartmias e
-          lotar a geladeira, dou um pico de insule ejogo o jodjaosdija
-        </Question>
+        <Question>{helpOrder.question}</Question>
         <Title>SUA RESPOSTA</Title>
-        <Answer placeholder="Digite aqui sua resposta" type="text" />
+        <Answer
+          placeholder="Digite aqui sua resposta"
+          type="text"
+          onChange={event => setAnswer(event.target.value)}
+        />
 
-        <ButtonAdd onPress={handleAdd}>Responder aluno</ButtonAdd>
-        <ButtonCancel onPress={handleClose}>Voltar</ButtonCancel>
+        <ButtonAdd onClick={() => handleAdd(answer)}>Responder aluno</ButtonAdd>
+        <ButtonCancel onClick={handleClose}>Voltar</ButtonCancel>
       </Card>
     </Container>
   );
