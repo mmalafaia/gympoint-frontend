@@ -12,7 +12,7 @@ export const Container = styled.div`
     padding: 30px 0px;
   }
 
-  div {
+  > div {
     width: 100%;
     background: #fff;
 

@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 
 import api from '~/services/api';
+import Modal from '~/components/Modal';
 
 import { Container, ButtonEdit } from './styles';
 
 export default function Students() {
   const [helpOrderList, setHelpOrderList] = useState([]);
+  const [modal, setModal] = useState(false);
 
   useEffect(() => {
     async function loadStudents() {
@@ -23,6 +25,15 @@ export default function Students() {
         <h1>Pedidos de auxílio</h1>
       </header>
       <div>
+        {modal && (
+          <Modal
+            handleClose={() => {
+              setModal(false);
+            }}
+            handleOcurrence={ocurrence => {}}
+          />
+        )}
+
         <table>
           <thead>
             <tr>
@@ -35,7 +46,12 @@ export default function Students() {
               <tr>
                 <td>{hp.student.name}</td>
                 <td>
-                  <ButtonEdit type="button" onClick={() => {}}>
+                  <ButtonEdit
+                    type="button"
+                    onClick={() => {
+                      setModal(!modal);
+                    }}
+                  >
                     responder
                   </ButtonEdit>
                 </td>
