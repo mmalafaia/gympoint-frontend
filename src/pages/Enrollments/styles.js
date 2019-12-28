@@ -22,14 +22,6 @@ export const Container = styled.div`
       height: 56px;
       padding: 10px;
       justify-content: right;
-
-      input {
-        width: 237px;
-        padding-left: 40px;
-        margin-left: 10px;
-        border-radius: 4px;
-        border: 1px solid #eee;
-      }
     }
   }
 
@@ -76,13 +68,18 @@ export const Container = styled.div`
       padding: 5px 0px;
     }
 
-    input {
+    input,
+    select,
+    DatePicker {
       font-size: 16;
       padding: 10px;
       margin: 5px 0px;
       border-style: none;
       border: 1px solid #ddd;
       border-radius: 4px;
+      background: #fff;
+      font-size: 16px;
+      width: 100%;
     }
 
     ul {

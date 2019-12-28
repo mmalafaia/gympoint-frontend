@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Input } from '@rocketseat/unform';
+import { Form, Input, Select } from '@rocketseat/unform';
 import { toast } from 'react-toastify';
 import * as Yup from 'yup';
-import Select from 'react-select';
+import DatePicker from '~/components/DatePicker';
+import { parseISO } from 'date-fns';
 
 import api from '~/services/api';
 import { Container, ButtonBig, ButtonEdit, ButtonDelete } from './styles';
@@ -24,7 +25,8 @@ export default function Students() {
       name: '',
     },
     plan_id: 0,
-    start_date: '',
+    start_date: new Date(),
+    end_date: new Date(),
   });
   const [pageStatus, setPageStatus] = useState('list'); // list, add, edit
   const [studentList, setStudentList] = useState([]);
@@ -39,7 +41,7 @@ export default function Students() {
       const studentResponse = await api.get('students');
       const draftStudent = studentResponse.data.map(student => ({
         value: student.id,
-        label: student.name,
+        title: student.name,
       }));
 
       setStudentList(draftStudent);
@@ -47,7 +49,7 @@ export default function Students() {
       const planResponse = await api.get('plans');
       const draftPlan = planResponse.data.map(pln => ({
         value: pln.id,
-        label: pln.title,
+        title: pln.title,
       }));
 
       setPlanList(draftPlan);
@@ -57,6 +59,7 @@ export default function Students() {
   }, []);
 
   function handleAdd() {
+    console.log(enrollmentForm);
     setPageStatus('add');
   }
 
@@ -204,7 +207,7 @@ export default function Students() {
               options={studentList}
               defaultValue={{
                 id: enrollmentForm.student_id,
-                label: enrollmentForm.student.name,
+                title: enrollmentForm.student.name,
               }}
             />
           ) : (
@@ -224,7 +227,7 @@ export default function Students() {
                   options={planList}
                   defaultValue={{
                     id: enrollmentForm.plan_id,
-                    label: enrollmentForm.plan.title,
+                    title: enrollmentForm.plan.title,
                   }}
                 />
               ) : (
@@ -235,17 +238,20 @@ export default function Students() {
                 />
               )}
             </li>
-            <li>
+            <li key="2">
               <span>DATA INÍCIO</span>
-              <Input name="price" type="number" />
+              <DatePicker
+                name="start_date"
+                defaultValue={parseISO(enrollmentForm.start_date)}
+              />
             </li>
-            <li>
+            <li key="3">
               <span>DATA TÉRMINO</span>
-              <Input name="monthPrice" />
+              <DatePicker name="end_date" />
             </li>
-            <li>
+            <li key="4">
               <span>VALOR FINAL</span>
-              <Input name="monthPrice" />
+              <Input name="price" />
             </li>
           </ul>
         </Form>
